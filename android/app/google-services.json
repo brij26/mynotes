@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "721602485143",
+    "project_id": "mynotes-learning-flut",
+    "storage_bucket": "mynotes-learning-flut.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721602485143:android:69747c05f7b071349dc2d2",
+        "android_client_info": {
+          "package_name": "com.something.mynotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsxMbebusCDLsz4mJMh6rU6tD7I3Seq10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
