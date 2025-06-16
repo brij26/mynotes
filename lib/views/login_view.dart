@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as devtools show log;
-
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/utilities/show_error_dialog.dart';
 
 
 
@@ -66,8 +65,12 @@ late final TextEditingController _email;
                 Navigator.of(context).pushNamedAndRemoveUntil(notesRoute, (route) => false,);
                 }on FirebaseAuthException catch (e){
                   if (e.code == 'invalid-credential'){
-                    devtools.log('Email Or Password is Wrong');
+                    return showErrorDialog(context, "Invalid Email or Password");
+                  }else{
+                    return showErrorDialog(context, "text : ${e.code}");
                   }
+                }catch (e){
+                  return showErrorDialog(context, e.toString());
                 }
               }, 
               child: Text('Login')),
@@ -82,3 +85,4 @@ late final TextEditingController _email;
     );
   }
 }
+
