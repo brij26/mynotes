@@ -54,8 +54,6 @@ late final TextEditingController _email;
                 ),
               ),
               TextButton(onPressed: () async {
-                final user = FirebaseAuth.instance.currentUser;
-                if (user?.emailVerified ?? false){
                 final email = _email.text;
                 final password = _password.text;
                 try{
@@ -63,8 +61,13 @@ late final TextEditingController _email;
                   email: email, 
                   password: password,
                 );
+                final user = FirebaseAuth.instance.currentUser;
+                if (user?.emailVerified ?? false){
                 // ignore: use_build_context_synchronously
-                Navigator.of(context).pushNamedAndRemoveUntil(notesRoute, (route) => false,);
+                Navigator.of(context).pushNamedAndRemoveUntil(notesRoute, (route) => false,);}
+                else{
+                  Navigator.of(context).pushNamedAndRemoveUntil(verifyEmailRoute, (route) => false,);
+                }
                 }on FirebaseAuthException catch (e){
                   if (e.code == 'invalid-credential'){
                     await showErrorDialog(context, "Invalid Email or Password");
@@ -74,9 +77,7 @@ late final TextEditingController _email;
                 }catch (e){
                   await showErrorDialog(context, e.toString());
                 }
-              }else{
-                showErrorDialog(context, "Please verify your email first");
-              }}, 
+              }, 
               child: Text('Login')),
               TextButton(onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
