@@ -22,7 +22,6 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
           const Text("If you didn't get email then click on this button"),
           TextButton(
             onPressed: () async {
-              final user = AuthService.Firebase().currentUser;
               await AuthService.Firebase().sendEmailVerification();
             },
             child: const Text("Send Email Verification"),
