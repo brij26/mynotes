@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/services/auth/auth_exception.dart';
+import 'package:mynotes/services/auth/auth_service.dart';
 import 'package:mynotes/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -57,12 +58,12 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await AuthService.Firebase().logIn(
                   email: email,
                   password: password,
                 );
-                final user = FirebaseAuth.instance.currentUser;
-                if (user?.emailVerified ?? false) {
+                final user = AuthService.Firebase().currentUser;
+                if (user?.isEmailVerified ?? false) {
                   // ignore: use_build_context_synchronously
                   Navigator.of(
                     context,
@@ -72,14 +73,10 @@ class _LoginViewState extends State<LoginView> {
                     context,
                   ).pushNamedAndRemoveUntil(verifyEmailRoute, (route) => false);
                 }
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'invalid-credential') {
-                  await showErrorDialog(context, "Invalid Email or Password");
-                } else {
-                  await showErrorDialog(context, "text : ${e.code}");
-                }
-              } catch (e) {
-                await showErrorDialog(context, e.toString());
+              } on InvalidCredentialsAuthException {
+                await showErrorDialog(context, "Invalid Email or Password");
+              } on GenericAuthException {
+                await showErrorDialog(context, "Authentication Error");
               }
             },
             child: Text('Login'),
