@@ -14,7 +14,7 @@ class _NewNoteViewState extends State<NewNoteView> {
   late final NotesService _notesService;
   late final TextEditingController _textController;
 
-  Future<DatabaseNote> CreateNewNote() async {
+  Future<DatabaseNote> createNewNote() async {
     final exisitingNote = _note;
     if (exisitingNote != null) {
       return exisitingNote;
@@ -74,7 +74,7 @@ class _NewNoteViewState extends State<NewNoteView> {
     return Scaffold(
       appBar: AppBar(title: Text("Your Note")),
       body: FutureBuilder(
-        future: CreateNewNote(),
+        future: createNewNote(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
