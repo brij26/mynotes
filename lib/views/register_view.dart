@@ -62,7 +62,7 @@ class _RegisterViewState extends State<RegisterView> {
                   email: email,
                   password: password,
                 );
-                final user = AuthService.Firebase().currentUser;
+                AuthService.Firebase().currentUser;
                 AuthService.Firebase().sendEmailVerification();
                 Navigator.of(context).pushNamed(verifyEmailRoute);
               } on WeakpasswordAuthException {
